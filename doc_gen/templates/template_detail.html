@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<br>
+<div class="container">
+<h1 class='text-center'> {{ template.name}} </h1>
+<a class="btn btn-primary" style='float:right;' href="{% url 'template-update' template.pk %}"><span class="fa fa-pen"></span></a>
+<div class="jumbotron">
+{{ template.template |safe  }}
+</div>
+</div>
+
+{% endblock content %}

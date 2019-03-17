@@ -1,0 +1,36 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="modal">
+    <div class="modal-dialog modal-md modal-dialog-centered " role="document">
+        <div class="modal-content">
+            <div class="modal-header border-bottom border-dark-grey padding-bottom">
+                <h5 class="modal-title" id="modalTitle">Modal Title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <p>Modal Content</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    let modalData;
+
+    function showModal(data)
+    {
+        modalData = data;
+        $("#modal").modal('show');
+        $("#modalTitle").html(data.head);
+        $("#modalBody").html(data.body);
+    }
+
+    function hideModal()
+    {
+        $("#modal").modal('hide');
+        $("#modalContent").html("");
+    }
+
+</script>
+      

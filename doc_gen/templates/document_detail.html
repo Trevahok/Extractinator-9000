@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<br>
+<div class="container">
+<h3 class='text-center'> Meta: {{ document.meta }} </h3>
+<br>
+<br>
+<form class="form-group" action="{% url 'generate' %}" method='post'>
+{% csrf_token %}
+<div class="jumbotron">
+    <h4> Data Sets </h4>
+    <a class="btn btn-primary" href="{% url 'doc-add' %}">Add Dataset</a>
+    <hr>
+
+    <table class="table table-striped table-hover">
+    {% for file in document.documentfile_set.all %}
+        <tr>
+        <td><input type="radio" name="file" value="{{file.pk}}" class="form-control"></td>    
+        <td>{{file}}</td>
+        <td><button class="btn btn-danger" onclick="deleteClass('{% url 'doc-delete' file.pk %}')"><span class="fa fa-trash"></span></button></td> 
+        </tr>
+    {% endfor %}
+    </table>
+    <hr>
+</div>
+<br>
+
+<div class="row">
+    <div class="col-8">
+            <label>Row Index:</label>
+        <input class='form-control' name='row' value='0' type='number'>
+    </div>
+    <div class="col-4">
+        <br>
+        <button class='btn btn-success' style='width: 100%;'>Generate</button>
+    </div>
+</div>
+
+<br><br>
+<div class="jumbotron">
+        
+    <h4> Templates </h4>
+    <a class="btn btn-primary" href="{% url 'template-add' document.pk %}?next={{request.path}} ">Add Template</a>
+    <hr>
+    <form>
+    <table class="table table-striped table-hover">
+    {% for template in document.template_set.all %}
+    <tr>
+        <td><input type="radio" name="template" value="{{template.pk}}" class="form-control"></td>
+        <td>{{template}}</td>
+        <td><button class="btn btn-danger" onclick="deleteTemplate('{% url 'template-delete' template.pk %}')"><span class="fa fa-trash"></span></button></td>
+    </tr>
+    {% endfor %}
+    </table>
+    <hr>
+</div>
+
+</form>
+</div>
+
+<script>
+    function deleteClass(url)
+    {
+        console.log(url);
+        $.ajax({
+            type: "GET",
+            url: url,
+            success: function(response)
+            {
+                showModal({'head':'Delete Document ?','body': response, 'url':url });
+            }
+        });
+    }
+    function deleteTemplate(url)
+    {
+        console.log(url);
+        $.ajax({
+            type: "GET",
+            url: url,
+            success: function(response)
+            {
+                showModal({'head':'Delete Template ?','body': response, 'url':url });
+            }
+        });
+    }
+</script>
+{% endblock content %}

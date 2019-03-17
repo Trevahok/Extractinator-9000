@@ -1,0 +1,22 @@
+<div class="container">
+    <center>
+    <form method="POST" enctype="multipart/form-data" style="width:100%;">
+        {% csrf_token %}
+        <br>
+        <div class="jumbotron text-dark">
+            <h5>{{object}}<br></h5>
+        </div>
+        <br>
+        <div class="btn-group" style="width:100%;">
+            <button class="col btn btn-primary" onclick="hideModal()" type="button">Cancel</button>
+            <button class="col btn btn-danger">Delete</button>
+        </div>
+    </form>
+</center>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $("form").attr("action", modalData.url);
+    });
+</script>

@@ -1,0 +1,37 @@
+{% load template_tags %}
+
+<div class="container-fluid">
+        <br>
+        <form method="POST" enctype="multipart/form-data" id="modalForm">
+            {% csrf_token %}
+            {{form|crispy}}
+            <div class="btn-group" style="width:100%;">
+                <button class="col btn btn-primary" onclick="hideModal()" type="button">Cancel</button>
+                <button class="col btn btn-danger" onclick="submitData()" type="button">Submit</button>
+            </div>
+        </form>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $("form").attr("action", modalData.url);
+    });
+
+    function submitData()
+    {
+        $.ajax({
+            type: "POST",
+            url: modalData.url,
+            data: $("#modalForm").serialize(),
+            success: function(response) {
+                var el = document.createElement('html');
+                el.innerHTML = response;
+                if (el.getElementsByClassName('alert').length > 0)
+                    showModal({'body': response, 'url': modalData.url});
+                else
+                    location.reload();
+                console.log(response);                
+            },
+        });
+    }
+</script>

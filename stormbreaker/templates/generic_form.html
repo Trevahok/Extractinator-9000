@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block title %} Form {% endblock title %}
+{% load crispy_forms_tags %}
+
+{% block style %}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+<style>
+body{
+    background-color: #f7f7f9;
+}
+
+</style>
+{% endblock style %}
+
+{% block content %}
+<form  class="dropzone"></form>
+<div class="container-fluid jumbotron p-auto ">
+<div class="row justify-content-center align-items-center">
+<form method="POST" class="card col-md-8 col-lg-5 p-3 shadow" enctype="multipart/form-data">
+    {% csrf_token %}
+        <br>
+        {% comment %} {% if 'file' in form.fields %} there is a file {% endif %} {% endcomment %}
+        <div class="card-body">
+        {% for field in form %}
+            {{field|as_crispy_field}}
+        
+        {% endfor %}
+        </div>
+        <button class="btn btn-info">Submit</button>
+</form>
+</div>
+</div>
+{% endblock content %}
+{% block script %}
+<script src="https://cdn.ckeditor.com/4.11.1/full-all/ckeditor.js"></script>
+<script>
+    var config = {
+        extraPlugins: 'codesnippet',
+        codeSnippet_theme: 'monokai_sublime',
+        height: 300,
+        width: '100%'
+    };
+
+$("textarea").each(function () {
+    CKEDITOR.replace(this, config); // still same editor
+});
+
+$('select').select2({
+    width:'100%',
+    placeholder: "Type Here..."
+
+});
+</script>
+{% endblock script %}

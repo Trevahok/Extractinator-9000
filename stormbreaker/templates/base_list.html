@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block style %}
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+
+{% endblock style %}
+
+
+{% block content %}
+<div class="container h-100 mt-3">
+<div class='table-responsive'>
+<table class="table-striped table col-12 table-hover " id="Table">
+    {% block table %}
+    {% endblock %}
+</table>
+</div>
+</div>
+{% endblock content %}
+
+{% block script %}
+<script>
+$(document).ready( function () {
+    $('#Table').DataTable();
+} );
+</script>
+{% endblock script %}

@@ -1,0 +1,35 @@
+{% extends 'base_list.html' %}
+{% block table %}
+<thead>
+<th>ID</th>
+<th>Meta</th>
+<th>Edit</th>
+<th>Delete</th>
+</thead>
+<tbody>
+{% for document in object_list %}
+<tr>
+    <td>{{document.id}}</td>
+    <td>{{document.meta}}</td>
+    <td><a class="btn btn-primary" href="{% url 'doc-detail' document.pk %}"><span class="fa fa-pen"></span></a></td>
+    <td><button class="btn btn-danger" onclick="deleteClass('{% url 'doc-meta-delete' document.pk %}')"><span class="fa fa-trash"></span></button></td>
+</tr>
+{% endfor %}
+</tbody>
+
+
+<script>
+    function deleteClass(url)
+    {
+        console.log(url);
+        $.ajax({
+            type: "GET",
+            url: url,
+            success: function(response)
+            {
+                showModal({'head':'Delete Document ?','body': response, 'url':url });
+            }
+        });
+    }
+</script>
+{% endblock table %}

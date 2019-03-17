@@ -1,0 +1,96 @@
+{% load static %}
+
+<style>
+    nav {
+        margin: 0;
+        padding: 0;
+    }
+    nav li a{
+        border-bottom: 2px solid rgba(0, 0, 0, 0);
+        display: block !important;    
+    }
+    nav li a:hover {
+        border-bottom: 2px solid teal;
+    }
+    nav li div a{
+        padding: 8% !important;
+    }
+</style>
+
+<nav class="navbar navbar-expand-md navbar-dark bg-primary sticky-top py-1 ">
+    <a class="navbar-brand" href="{% url 'home' %}">
+    StormBreaker
+    </a>
+    &nbsp;
+     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="fa fa-angle-down"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav mr-auto">
+             <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                    <span class="fa fa-exclamation-triangle"></span> Documents Meta
+                </a>
+                <div class="dropdown-menu">
+                    <a href="{% url 'doc-view'%}" class="dropdown-item">
+                        <span class="fa fa-eye"></span> View Document
+                    </a>
+                    <a href="{% url 'doc-add'%}" class="dropdown-item">
+                        <span class="fa fa-plus"></span> Add Document
+                    </a>
+                </div>
+            </li> 
+             <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                    <span class="fa fa-exclamation-triangle"></span>Template
+                </a>
+                <div class="dropdown-menu">
+                    <a href="{% url 'template-view'%}" class="dropdown-item">
+                        <span class="fa fa-eye"></span> View Template
+                    </a>
+                    <a href="{% url 'template-add'%}" class="dropdown-item">
+                        <span class="fa fa-plus"></span> Add Template
+                    </a>
+                </div>
+            </li> 
+            <li class="nav-item">
+                <a href="{% url 'generate' %}" class="nav-link">
+                    <span class="fa fa-lock"></span> Generate
+                </a>
+            </li>
+         
+        </ul>
+        <!--right aligned navbar content-->
+        <ul class='navbar-nav my-0'>
+            {% if user.is_authenticated %}
+            <li class='nav-item dropdown btn'>
+                <a href="#" class="nav-link dropdown-toggle  " id='userdropdown' data-toggle="dropdown">
+                    {{ user.username | title }}
+                </a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a href=" {% url 'update_password'%} " class="dropdown-item">
+                        <span class="fa fa-th-list"></span>
+                        Change Password
+                    </a>
+                    <a href="{% url 'logout' %} " class="dropdown-item">
+                        <span class="fa fa-sign-out-alt"></span>
+                        Log Out
+                    </a>
+
+                </div>
+            </li>
+            {% else %}
+            <li class="nav-item">
+                <a href="{% url 'login' %}?next={{request.path}}" class="nav-link">
+                    <span class="fa fa-user-circle"></span> Login
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'signup' %}" class="nav-link">
+                    <span class="fa fa-user-circle"></span> Sign Up
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>

@@ -1,0 +1,41 @@
+{% extends 'base_list.html' %}
+{% block table %}
+<thead>
+<th>Id</th>
+<th>Title</th>
+<th>Edit</th>
+<th>Delete</th>
+</thead>
+<tbody>
+{% for template in object_list %}
+<tr>
+    <td>{{template.id}}</td>
+    <td>
+    <a href="{% url 'template-detail' template.pk%}" class="btn btn-success"><span class="fa fa-search">
+    {{template.name}}
+    </span></a>
+    </td>
+    <td>{{template.template | safe | truncatewords:20 }}</td>
+    <td><a class="btn btn-primary" href="{% url 'template-update' template.pk %}"><span class="fa fa-pen"></span></a></td>
+    <td><button class="btn btn-danger" onclick="deleteQuestion('{% url 'template-delete' template.pk %}')"><span class="fa fa-trash"></span></button></td>
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+<script>
+    function deleteQuestion(url)
+    {
+        console.log(url);
+        $.ajax({
+            type: "GET",
+            url: url,
+            success: function(response)
+            {
+                showModal({'head':'Delete Template ?','body':response, 'url': url});
+            }
+        });
+    }
+</script>       
+{% endblock table %}

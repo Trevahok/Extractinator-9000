@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}BiFROST
+{% endblock title %}
+
+
+{% block style %}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+{% endblock style %}
+
+{% block content %}
+<br>
+<div class="container jumbotron text-center text-success">
+{% load staticfiles %}
+Storm Breaker - Document Generator
+<br>
+<br>
+<br>
+<br>
+<a href="{% url 'doc-add'%}" class="btn btn-success"><i class="fa fa-upload" aria-hidden="true"></i> &nbsp; Add Document </a>
+</div>
+<div>
+</div>
+{% endblock content %}
