@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>grapejs</title>
+    <link rel="stylesheet" href="http://unpkg.com/grapesjs/dist/css/grapes.min.css">
+    <script src="http://unpkg.com/grapesjs"></script>
+
+</head>
+
+<body>
+
+
+    <div id="gjs">
+        <h1> this is heading </h1>
+    </div>
+
+    <div id="blocks"></div>
+
+    <script type="text/javascript">
+        var editor = grapesjs.init({
+            container: '#gjs',
+            fromElement: true,
+            blockManager: {
+                appendTo: '#blocks',
+                blocks: [{
+                    id: 'Name', // id is mandatory
+                    label: '<b>Name</b>', // You can use HTML/SVG inside labels
+                    attributes: {
+                        class: 'gjs-block-section'
+                    },
+                    content: ' {{ Name }} ',
+                }, {
+                    id: 'text',
+                    label: 'Text',
+                    content: '<div data-gjs-type="text">Insert your text here</div>',
+                }, {
+                    id: 'image',
+                    label: 'Image',
+                    // Select the component once it's dropped
+                    select: true,
+                    // You can pass components as a JSON instead of a simple HTML string,
+                    // in this case we also use a defined component type `image`
+                    content: {
+                        type: 'image'
+                    },
+                    // This triggers `active` event on dropped components and the `image`
+                    // reacts by opening the AssetManager
+                    activate: true,
+                }]
+            },
+        });
+    </script>
+</body>
+
+</html>

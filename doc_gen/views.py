@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import CreateView, UpdateView, DeleteView, DetailView, ListView,FormView
+from django.contrib.auth.mixins import LoginRequiredMixin 
 from django.http import HttpResponse
 from . import models
 from . import forms
@@ -11,11 +12,11 @@ import json
 from io import StringIO
 from jinja2 import Template 
 
-class DocumentListView(ListView):
+class DocumentListView(LoginRequiredMixin,ListView):
     model = models.DocumentMeta
     template_name = 'document_list.html'
     
-class DocumentCreateView(CreateView):
+class DocumentCreateView(LoginRequiredMixin,CreateView):
     form_class = forms.DocumentMetaForm
     template_name = "generic_form.html"
 
@@ -47,31 +48,31 @@ class DocumentCreateView(CreateView):
             return self.form_invalid(form,*args,**kwargs)
 
 
-class DocumentUpdateView(UpdateView):
+class DocumentUpdateView(LoginRequiredMixin,UpdateView):
     model = models.DocumentFile
     form_class = forms.DocumentMetaForm
     template_name = "generic_form.html"
 
-class DocumentDeleteView(DeleteView):
+class DocumentDeleteView(LoginRequiredMixin,DeleteView):
     model = models.DocumentFile
     template_name = "delete_confirm.html"
     success_url = reverse_lazy('doc-view')
 
-class DocumentMetaDeleteView(DeleteView):
+class DocumentMetaDeleteView(LoginRequiredMixin,DeleteView):
     model = models.DocumentMeta
     template_name = "delete_confirm.html"
     success_url = reverse_lazy('doc-view')
 
-class DocumentMetaDetailView(DetailView):
+class DocumentMetaDetailView(LoginRequiredMixin,DetailView):
     model = models.DocumentMeta
     template_name = "document_detail.html"
     context_object_name = "document"
 
-class TemplateListView(ListView):
+class TemplateListView(LoginRequiredMixin,ListView):
     model = models.Template
     template_name = "template_list.html"
         
-class TemplateCreateView(CreateView):
+class TemplateCreateView(LoginRequiredMixin,CreateView):
     model = models.Template
     form_class = forms.TemplateForm
     template_name = "generic_form.html"
@@ -105,23 +106,23 @@ class TemplateCreateView(CreateView):
         else:
             return super().get_initial()
 
-class TemplateDetailView(DetailView):
+class TemplateDetailView(LoginRequiredMixin,DetailView):
     model = models.Template
     context_object_name = 'template'
     template_name = 'template_detail.html'
 
-class TemplateUpdateView(UpdateView):
+class TemplateUpdateView(LoginRequiredMixin,UpdateView):
     model = models.Template
     form_class = forms.TemplateForm
     template_name = "generic_form.html"
 
-class TemplateDeleteView(DeleteView):
+class TemplateDeleteView(LoginRequiredMixin,DeleteView):
     model = models.Template
     template_name = "delete_confirm.html"
     success_url = reverse_lazy('template-detail')
 
 
-class GenerateDocumentView(FormView):
+class GenerateDocumentView(LoginRequiredMixin,FormView):
     form_class = forms.GenerationForm
     template_name = 'generic_form.html'
     success_url = reverse_lazy('home')
@@ -142,13 +143,11 @@ class GenerateDocumentView(FormView):
             print(template.template)
             jinja_template = Template(template.template)
             bootstrap = '''
-
-
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.2.1/lux/bootstrap.min.css" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js" integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous"></script>'''
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.2.1/lux/bootstrap.min.css" crossorigin="anonymous">
+            <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+            <script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js" integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U" crossorigin="anonymous"></script>
+            <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous"></script>'''
             return HttpResponse(bootstrap+jinja_template.render(**kwargs))
         else:
             return self.form_invalid(form, **kwargs)
