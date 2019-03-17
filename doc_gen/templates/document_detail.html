@@ -20,7 +20,7 @@
         <tr>
         <td><input type="radio" name="file" value="{{file.pk}}" class="form-control"></td>    
         <td>{{file}}</td>
-        <td><button class="btn btn-danger" onclick="deleteClass('{% url 'doc-delete' file.pk %}')"><span class="fa fa-trash"></span></button></td> 
+        <td><button type=button class="btn btn-danger" onclick="deleteClass('{% url 'doc-delete' file.pk %}'); return false;"><span class="fa fa-trash"></span></button></td> 
         </tr>
     {% endfor %}
     </table>
@@ -35,7 +35,7 @@
     </div>
     <div class="col-4">
         <br>
-        <button class='btn btn-success' style='width: 100%;'>Generate</button>
+        <button type='submit' class='btn btn-success' style='width: 100%;'>Generate</button>
     </div>
 </div>
 
@@ -51,7 +51,7 @@
     <tr>
         <td><input type="radio" name="template" value="{{template.pk}}" class="form-control"></td>
         <td>{{template}}</td>
-        <td><button class="btn btn-danger" onclick="deleteTemplate('{% url 'template-delete' template.pk %}')"><span class="fa fa-trash"></span></button></td>
+        <td><button  type=button class="btn btn-danger" onclick="deleteTemplate('{% url 'template-delete' template.pk %}'); return false;"><span class="fa fa-trash"></span></button></td>
     </tr>
     {% endfor %}
     </table>
